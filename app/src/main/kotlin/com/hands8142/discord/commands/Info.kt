@@ -1,6 +1,7 @@
 package com.hands8142.discord.commands
 
 import com.hands8142.discord.Util.timeFormat
+import dev.kord.common.entity.ActivityType
 import dev.kord.common.kColor
 import dev.kord.core.entity.User
 import dev.kord.rest.Image
@@ -72,6 +73,8 @@ fun infoCommand() = commands("Info") {
         description = "유저정보를 보여줍니다."
         execute(UserArg.optionalNullable()) {
             val target: User
+            val game: String
+            val status: String
             if (args.first !== null) {
                 target = args.first!!
             } else {
@@ -81,18 +84,30 @@ fun infoCommand() = commands("Info") {
             val joinTime = member.joinedAt.atZone(ZoneId.systemDefault())
             val createTime = target.id.timeStamp.atZone(ZoneId.systemDefault())
             val roles = member.roles.toList().map { it.mention }
+            if (member.getPresenceOrNull() !== null) {
+                if (member.getPresence().activities.filter { it.type == ActivityType.Game }.isNotEmpty()) {
+                    game = member.getPresence().activities.filter { it.type == ActivityType.Game }[0].name
+                } else {
+                    game = "게임 중이지 않습니다."
+                }
+                status = member.getPresence().status.value
+            } else {
+                status = "offline"
+                game = "게임 중이지 않습니다."
+            }
             respond {
                 title = target.username + nickname(member.nickname)
+                color = discord.configuration.theme?.kColor
                 author {
                     name = target.username
                     icon = target.avatar.url
                 }
                 description = "**이름**: ${target.username}\n**태그**: ${target.username}#${target.discriminator}\n**아이디**: ${target.id.value}"
-                //addInlineField("상태", member.getPresence().status.value)
-                //addInlineField("게임", member.getPresence().activities[1].name)
+                addInlineField("상태", status)
+                addInlineField("게임", game)
                 addInlineField("서버 참여 시간", timeFormat(joinTime))
                 addInlineField("계정 생성 일", timeFormat(createTime))
-                addInlineField("역할", roles.joinToString(", "))
+                addInlineField("역할", "**[${roles.size}]:** " + roles.joinToString(", "))
             }
         }
     }

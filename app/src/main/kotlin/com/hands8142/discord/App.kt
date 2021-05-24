@@ -2,6 +2,7 @@ package com.hands8142.discord
 
 import dev.kord.common.kColor
 import dev.kord.gateway.Intents
+import dev.kord.gateway.PrivilegedIntent
 import me.jakejmattson.discordkt.api.dsl.bot
 import dev.kord.x.emoji.Emojis
 import io.github.cdimascio.dotenv.dotenv
@@ -10,6 +11,7 @@ import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import java.awt.Color
 
+@OptIn(PrivilegedIntent::class)
 suspend fun main() {
     val dotenv = dotenv()
     val token = dotenv["TOKEN"]
@@ -25,9 +27,10 @@ suspend fun main() {
             generateCommandDocs = true
             showStartupLog = true
             recommendCommands = true
+            enableSearch = true
             commandReaction = Emojis.eyes
             theme = Color(0x00BFFF)
-            intents = Intents.nonPrivileged.values
+            intents = Intents.all.values
         }
 
         mentionEmbed {
