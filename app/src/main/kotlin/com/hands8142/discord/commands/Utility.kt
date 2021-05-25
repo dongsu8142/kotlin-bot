@@ -1,10 +1,13 @@
 package com.hands8142.discord.commands
 
-import com.hands8142.discord.interfaces.CoronaAPI
+import com.google.gson.Gson
+import com.hands8142.discord.interfaces.API
 import dev.kord.common.kColor
+import me.jakejmattson.discordkt.api.arguments.IntegerRangeArg
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.addInlineField
+import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -23,7 +26,7 @@ fun utilityCommands() = commands("Utility") {
                 .baseUrl("https://manyyapi.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-            val api = retrofit.create(CoronaAPI::class.java)
+            val api = retrofit.create(API::class.java)
             val response = api.getCorona().awaitResponse()
             val corona = response.body()!!
             if (corona.success) {
@@ -41,6 +44,52 @@ fun utilityCommands() = commands("Utility") {
                 }
             } else {
                 respond(corona.message)
+            }
+        }
+    }
+
+    command("음악차트") {
+        description = "멜론의 음악차트를 알려줍니다."
+        execute(IntegerRangeArg(1, 100).optionalNullable(), IntegerRangeArg(1, 100).optionalNullable()) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://manyyapi.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val api = retrofit.create(API::class.java)
+            val response = api.getMusic().awaitResponse()
+            if (response.isSuccessful) {
+                val music = response.body()!!
+                val jsonString = Gson().toJson(music).trimIndent()
+                val json = JSONObject(jsonString)
+                val first = args.first
+                val second = args.second
+                if (music.success) {
+                    if (first == null) {
+                        respond {
+                            title = "음악차트"
+                            color = discord.configuration.theme?.kColor
+                            for (i in 1..24) {
+                                addInlineField("${i}위", json.getString(i.toString()))
+                            }
+                        }
+                    } else if (second == null) {
+                        respond(first.toString() + "위: " + json.getString(first.toString()))
+                    } else if (first < second) {
+                        respond {
+                            title = "${first}부터 ${second}까지 음악차트"
+                            color = discord.configuration.theme?.kColor
+                            for (i in first..second) {
+                                addInlineField("${i}위", json.getString(i.toString()))
+                            }
+                        }
+                    } else {
+                        respond("범위를 다시 지정해 주세요.")
+                    }
+                } else {
+                    respond(music.message)
+                }
+            } else {
+                respond("음악차트를 가지고 오는데 실패하였습니다")
             }
         }
     }

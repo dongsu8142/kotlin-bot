@@ -20,9 +20,10 @@
 | 킥        | User, Text | 사용자를 추방합니다.    |
 
 ## Utility
-| Commands | Arguments | Description          |
-| -------- | --------- | -------------------- |
-| Help     | (Command) | Display a help menu. |
-| 코로나      |           | 현재 코로나 상황을 보여줍니다.    |
-| 핑        |           | 레이턴시를 보여줍니다          |
+| Commands | Arguments                            | Description          |
+| -------- | ------------------------------------ | -------------------- |
+| Help     | (Command)                            | Display a help menu. |
+| 음악차트     | (Integer (1-100)), (Integer (1-100)) | 멜론의 음악차트를 알려줍니다.     |
+| 코로나      |                                      | 현재 코로나 상황을 보여줍니다.    |
+| 핑        |                                      | 레이턴시를 보여줍니다          |
 
