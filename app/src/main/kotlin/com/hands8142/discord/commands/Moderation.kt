@@ -10,7 +10,7 @@ import me.jakejmattson.discordkt.api.dsl.commands
 fun moderationCommands() = commands("Moderation") {
     guildCommand("킥") {
         description = "사용자를 추방합니다."
-        execute(UserArg, EveryArg) {
+        execute(UserArg, EveryArg("사유")) {
             if(!author.asMember(guild.id).getPermissions().contains(Permission.KickMembers)) {
                 respond("당신은 추방권한이 없습니다.")
                 return@execute
@@ -26,7 +26,7 @@ fun moderationCommands() = commands("Moderation") {
 
     guildCommand("밴") {
         description = "사용자를 밴합니다."
-        execute(UserArg, EveryArg) {
+        execute(UserArg, EveryArg("사유")) {
             if(!author.asMember(guild.id).getPermissions().contains(Permission.BanMembers)) {
                 respond("당신은 밴권한이 없습니다.")
                 return@execute
@@ -45,7 +45,7 @@ fun moderationCommands() = commands("Moderation") {
 
     guildCommand("언밴") {
         description = "사용자의 밴을 풀어줍니다."
-        execute(EveryArg) {
+        execute(EveryArg("id")) {
             if(!author.asMember(guild.id).getPermissions().contains(Permission.BanMembers)) {
                 respond("당신은 밴을 풀 수 있는 권한이 없습니다.")
                 return@execute
