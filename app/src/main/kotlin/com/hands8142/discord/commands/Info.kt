@@ -10,7 +10,11 @@ import me.jakejmattson.discordkt.api.arguments.UserArg
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.addInlineField
+import me.jakejmattson.discordkt.api.extensions.toTimeString
 import java.time.ZoneId
+import java.util.*
+
+private val startTime = Date()
 
 fun infoCommand() = commands("Info") {
     command("봇정보") {
@@ -18,6 +22,7 @@ fun infoCommand() = commands("Info") {
         execute {
             val me = discord.kord.getSelf()
             val name = me.tag + " (" + me.id.value + ")"
+            val uptime = ((Date().time - startTime.time) / 1000).toTimeString()
             val server = discord.kord.guilds.toList().count()
             val user = discord.kord.guilds.toList().sumBy { it.memberCount!! }
             val channel = discord.kord.guilds.toList().sumBy { it.channels.toList().count() }
@@ -29,6 +34,7 @@ fun infoCommand() = commands("Info") {
                 }
                 addField("일반",
                     "**❯ 봇:** $name\n" +
+                            "**❯ 업타임:** $uptime\n" +
                             "**❯ 서버:** $server\n" +
                             "**❯ 유저:** $user\n" +
                             "**❯ 채널:** $channel\n" +
