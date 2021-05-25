@@ -28,22 +28,29 @@ fun utilityCommands() = commands("Utility") {
                 .build()
             val api = retrofit.create(API::class.java)
             val response = api.getCorona().awaitResponse()
-            val corona = response.body()!!
-            if (corona.success) {
-                respond {
-                    title = "Covid-19 Virus Korea Status"
-                    color = discord.configuration.theme?.kColor
-                    addField("Data source : Ministry of Health and Welfare of Korea", "http://ncov.mohw.go.kr/index.jsp")
-                    addField("Latest data refred time", "해당 자료는 ${corona.time} 자료입니다.")
-                    addInlineField("확진환자(누적)", corona.확진환자)
-                    addInlineField("완치환자(격리해제)", corona.완치환자)
-                    addInlineField("치료중(격리 중)", corona.치료중)
-                    addInlineField("사망", corona.사망)
-                    addInlineField("누적확진률", corona.누적확진률)
-                    addInlineField("치사율", corona.치사율)
+            if (response.isSuccessful) {
+                val corona = response.body()!!
+                if (corona.success) {
+                    respond {
+                        title = "Covid-19 Virus Korea Status"
+                        color = discord.configuration.theme?.kColor
+                        addField(
+                            "Data source : Ministry of Health and Welfare of Korea",
+                            "http://ncov.mohw.go.kr/index.jsp"
+                        )
+                        addField("Latest data refred time", "해당 자료는 ${corona.time} 자료입니다.")
+                        addInlineField("확진환자(누적)", corona.확진환자)
+                        addInlineField("완치환자(격리해제)", corona.완치환자)
+                        addInlineField("치료중(격리 중)", corona.치료중)
+                        addInlineField("사망", corona.사망)
+                        addInlineField("누적확진률", corona.누적확진률)
+                        addInlineField("치사율", corona.치사율)
+                    }
+                } else {
+                    respond(corona.message)
                 }
             } else {
-                respond(corona.message)
+                respond("코로나 정보를 불러오는데 실패했습니다.")
             }
         }
     }
