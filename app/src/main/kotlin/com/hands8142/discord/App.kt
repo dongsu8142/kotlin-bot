@@ -11,15 +11,16 @@ import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import java.awt.Color
 
-@OptIn(PrivilegedIntent::class)
+@OptIn(PrivilegedIntent::class, dev.kord.common.annotation.KordPreview::class)
 suspend fun main() {
     val dotenv = dotenv()
     val token = dotenv["TOKEN"]
+    val prefix = dotenv["PREFIX"]
     require(token != null) { "Expected the bot token as a command line argument!" }
 
     bot(token) {
         prefix {
-            "="
+            prefix
         }
 
         configure {
@@ -31,6 +32,12 @@ suspend fun main() {
             commandReaction = Emojis.eyes
             theme = Color(0x00BFFF)
             intents = Intents.all.values
+        }
+
+        localization {
+            helpName = "도움말"
+            helpDescription = "도움말 메뉴 표시"
+            helpEmbedDescription = "자세한 내용은 `${prefix}${helpName} <command>`을 참조하십시오."
         }
 
         mentionEmbed {

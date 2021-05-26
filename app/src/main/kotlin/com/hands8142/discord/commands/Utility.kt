@@ -55,9 +55,9 @@ fun utilityCommands() = commands("Utility") {
         }
     }
 
-    command("음악차트") {
+    command("음악차트", "노래차트", "음악순위", "노래순위") {
         description = "멜론의 음악차트를 알려줍니다."
-        execute(IntegerRangeArg(1, 100).optionalNullable(), IntegerRangeArg(1, 100).optionalNullable()) {
+        execute(IntegerRangeArg(1, 100, "단일 또는 범위(1-100)").optionalNullable(), IntegerRangeArg(1, 100, "범위(1-100)").optionalNullable()) {
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://manyyapi.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
