@@ -11,11 +11,12 @@ import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import java.awt.Color
 
+val dotenv = dotenv()
+private val token = dotenv["TOKEN"]
+private val prefix = dotenv["PREFIX"]
+
 @OptIn(PrivilegedIntent::class, dev.kord.common.annotation.KordPreview::class)
 suspend fun main() {
-    val dotenv = dotenv()
-    val token = dotenv["TOKEN"]
-    val prefix = dotenv["PREFIX"]
     require(token != null) { "Expected the bot token as a command line argument!" }
 
     bot(token) {

@@ -1,8 +1,10 @@
 package com.hands8142.discord.commands
 
 import com.google.gson.Gson
+import com.hands8142.discord.dotenv
 import com.hands8142.discord.interfaces.API
 import dev.kord.common.kColor
+import me.jakejmattson.discordkt.api.arguments.EveryArg
 import me.jakejmattson.discordkt.api.arguments.IntegerRangeArg
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addField
@@ -10,6 +12,9 @@ import me.jakejmattson.discordkt.api.extensions.addInlineField
 import org.json.JSONObject
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+
+private val AccessKey = dotenv["ACCESS_KEY"]
 
 fun utilityCommands() = commands("Utility") {
     command("핑") {
@@ -97,6 +102,28 @@ fun utilityCommands() = commands("Utility") {
                 }
             } else {
                 respond("음악차트를 가지고 오는데 실패하였습니다")
+            }
+        }
+    }
+
+    command("이미지", "사진"){
+        description = "사진을 찾아줍니다."
+        execute(EveryArg("사진 이름")) {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api.unsplash.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            val api = retrofit.create(API::class.java)
+            val response = api.getUnsplash(AccessKey, args.first, 20).awaitResponse()
+            if (response.isSuccessful){
+                if (response.body()?.total != 0){
+                    val random = Random().nextInt(response.body()?.results?.size!!)
+                    respond(response.body()!!.results[random].urls.raw)
+                } else {
+                    respond("검색 결과가 없습니다.")
+                }
+            } else {
+                respond("사진을 불러오는데 실패하였습니다.")
             }
         }
     }
