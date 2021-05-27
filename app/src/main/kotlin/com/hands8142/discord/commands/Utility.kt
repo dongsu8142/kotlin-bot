@@ -23,7 +23,7 @@ fun utilityCommands() = commands("Utility") {
         description = "현재 코로나 상황을 보여줍니다."
         execute {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://manyyapi.herokuapp.com")
+                .baseUrl("https://koreaapi.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val api = retrofit.create(API::class.java)
@@ -59,7 +59,7 @@ fun utilityCommands() = commands("Utility") {
         description = "멜론의 음악차트를 알려줍니다."
         execute(IntegerRangeArg(1, 100, "단일 또는 범위(1-100)").optionalNullable(), IntegerRangeArg(1, 100, "범위(1-100)").optionalNullable()) {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://manyyapi.herokuapp.com")
+                .baseUrl("https://koreaapi.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val api = retrofit.create(API::class.java)
