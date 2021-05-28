@@ -13,7 +13,6 @@ fun MessageListener() = listeners {
         if (message.getGuildOrNull() !== null) {
             val randomXp = Random().nextInt(9) + 1
             val hasLeveledUp = appendXp(message.author?.id?.value!!, guildId!!.value, randomXp)
-            println(hasLeveledUp)
             if (hasLeveledUp !== null) {
                 if (hasLeveledUp) {
                     val user = fetch(message.author?.id?.value!!, guildId!!.value)

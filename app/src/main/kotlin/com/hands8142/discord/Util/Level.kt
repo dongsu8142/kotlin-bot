@@ -11,7 +11,6 @@ fun appendXp(userId: Long, guildId: Long, xp: Int): Boolean? {
             "SELECT * from level WHERE guildId = $guildId AND userId = $userId"
         val user = database.prepareStatement(sql).executeQuery()
         if (user.next()) {
-            println(user.getInt("xp"))
             val newxp = user.getInt("xp") + xp
             val newLevel = floor(0.1 * sqrt(newxp.toDouble())).toInt()
             val update_sql = "UPDATE level SET level = $newLevel, xp = $newxp WHERE guildId = $guildId AND userId = $userId"
