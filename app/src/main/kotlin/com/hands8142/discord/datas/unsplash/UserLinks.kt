@@ -1,6 +1,6 @@
 package com.hands8142.discord.datas.unsplash
 
-data class LinksXXX(
+data class UserLinks(
     val followers: String,
     val following: String,
     val html: String,
