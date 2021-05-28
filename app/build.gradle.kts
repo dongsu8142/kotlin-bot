@@ -15,6 +15,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("org.json:json:20210307")
+    implementation("mysql:mysql-connector-java:8.0.25")
 }
 
 application {

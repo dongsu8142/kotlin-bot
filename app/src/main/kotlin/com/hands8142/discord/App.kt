@@ -1,5 +1,6 @@
 package com.hands8142.discord
 
+import com.hands8142.discord.Util.Database
 import dev.kord.common.kColor
 import dev.kord.gateway.Intents
 import dev.kord.gateway.PrivilegedIntent
@@ -12,6 +13,8 @@ import me.jakejmattson.discordkt.api.extensions.profileLink
 import java.awt.Color
 
 val dotenv = dotenv()
+// val database = Database.connection()
+val database = Database.createTable()
 private val token = dotenv["TOKEN"]
 private val prefix = dotenv["PREFIX"]
 
