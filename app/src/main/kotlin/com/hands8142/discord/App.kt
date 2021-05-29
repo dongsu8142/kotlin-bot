@@ -73,7 +73,7 @@ suspend fun main() {
         }
 
         presence {
-            playing("discordkt")
+            playing("=도움말")
         }
 
         onStart {

@@ -13,13 +13,11 @@ fun MessageListener() = listeners {
         if (message.getGuildOrNull() !== null) {
             val randomXp = Random().nextInt(9) + 1
             val hasLeveledUp = appendXp(message.author?.id?.value!!, guildId!!.value, randomXp)
-            if (hasLeveledUp !== null) {
-                if (hasLeveledUp) {
-                    val user = fetch(message.author?.id?.value!!, guildId!!.value)
-                    if (user !== null) {
-                        val level = user.getInt("level")
-                        message.channel.createMessage("레벨업!! 현재레벨: $level")
-                    }
+            if (hasLeveledUp) {
+                val user = fetch(message.author?.id?.value!!, guildId!!.value)
+                if (user.next()) {
+                    val level = user.getInt("level")
+                    message.channel.createMessage("축하합니다 ${message.author?.mention}님, 레벨이 상승하였습니다 ${level}!!")
                 }
             }
         }

@@ -29,8 +29,8 @@ object Database {
                 val sql =
                     "CREATE TABLE level (guildId BIGINT NOT NULL, userId BIGINT NOT NULL, xp BIGINT NOT NULL, level BIGINT NOT NULL)"
                 if (database.metaData.getColumns(null, null, "level", null).next()) {
-                    val drop_sql = "DROP TABLE level"
-                    database.prepareStatement(drop_sql).executeUpdate()
+                    val dropSql = "DROP TABLE level"
+                    database.prepareStatement(dropSql).executeUpdate()
                     database.prepareStatement(sql).executeUpdate()
                     println("Drop Table And Create Table Completed")
                 } else {
