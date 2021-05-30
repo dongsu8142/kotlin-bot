@@ -14,7 +14,7 @@ fun MessageListener() = listeners {
             val randomXp = Random().nextInt(9) + 1
             val hasLeveledUp = appendXp(message.author?.id?.value!!, guildId!!.value, randomXp)
             if (hasLeveledUp) {
-                val user = fetch(message.author?.id?.value!!, guildId!!.value)
+                val user = fetch(message.author?.id?.value!!, guildId!!.value)!!
                 if (user.next()) {
                     val level = user.getInt("level")
                     message.channel.createMessage("축하합니다 ${message.author?.mention}님, 레벨이 상승하였습니다 ${level}!!")

@@ -34,10 +34,13 @@ fun appendXp(userId: Long, guildId: Long, xp: Int): Boolean {
     return false
 }
 
-fun fetch(userId: Long, guildId: Long): ResultSet {
-    val sql =
-        "SELECT * from level WHERE guildId = $guildId AND userId = $userId"
-    return database!!.prepareStatement(sql).executeQuery()
+fun fetch(userId: Long, guildId: Long): ResultSet? {
+    if (database !== null) {
+        val sql =
+            "SELECT * from level WHERE guildId = $guildId AND userId = $userId"
+        return database.prepareStatement(sql).executeQuery()
+    }
+    return null
 }
 
 fun fetchLeaderboard(guildId: Long, limit: Int): List<HashMap<String, Any>>? {
@@ -74,6 +77,10 @@ suspend fun computeLeaderboard(kord: Kord, leaderboard: List<HashMap<String, Any
     }
 
     return computedArray
+}
+
+fun xpFor(targetLevel: Long): Long {
+    return targetLevel * targetLevel * 100
 }
 
 private fun convertResultSetToArrayList(rs: ResultSet): ArrayList<HashMap<String, Any>> {
