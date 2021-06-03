@@ -5,7 +5,6 @@ import com.hands8142.discord.Util.computeLeaderboard
 import com.hands8142.discord.Util.fetch
 import com.hands8142.discord.Util.xpFor
 import dev.kord.common.kColor
-import dev.kord.core.entity.User
 import me.jakejmattson.discordkt.api.arguments.UserArg
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addInlineField
@@ -35,11 +34,10 @@ fun levelCommand() = commands("level") {
     guildCommand("랭크") {
         description = "랭크를 보여줍니다."
         execute(UserArg.optionalNullable()) {
-            val target: User
-            if (args.first !== null) {
-                target = args.first!!
+            val target = if (args.first !== null) {
+                args.first!!
             } else {
-                target = author
+                author
             }
             val user = fetch(target.id.value, guild.id.value)
             if (user !== null) {

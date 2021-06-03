@@ -3,15 +3,15 @@ package com.hands8142.discord.commands
 import com.hands8142.discord.Util.timeFormat
 import dev.kord.common.entity.ActivityType
 import dev.kord.common.kColor
-import dev.kord.core.entity.User
 import dev.kord.rest.Image
 import kotlinx.coroutines.flow.toList
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import me.jakejmattson.discordkt.api.arguments.UserArg
 import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.addInlineField
 import me.jakejmattson.discordkt.api.extensions.toTimeString
-import java.time.ZoneId
 import java.util.*
 
 private val startTime = Date()
@@ -24,9 +24,9 @@ fun infoCommand() = commands("Info") {
             val name = me.tag + " (" + me.id.value + ")"
             val uptime = ((Date().time - startTime.time) / 1000).toTimeString()
             val server = discord.kord.guilds.toList().count()
-            val user = discord.kord.guilds.toList().sumBy { it.memberCount!! }
-            val channel = discord.kord.guilds.toList().sumBy { it.channels.toList().count() }
-            val createTime = me.id.timeStamp.atZone(ZoneId.systemDefault())
+            val user = discord.kord.guilds.toList().sumOf { it.memberCount!! }
+            val channel = discord.kord.guilds.toList().sumOf { it.channels.toList().count() }
+            val createTime = me.id.timeStamp.toLocalDateTime(TimeZone.currentSystemDefault())
             respond {
                 color = discord.configuration.theme?.kColor
                 thumbnail {
@@ -40,7 +40,8 @@ fun infoCommand() = commands("Info") {
                             "**❯ 채널:** $channel\n" +
                             "**❯ 만든날짜:** ${timeFormat(createTime)}\n" +
                             "**❯ Kotlin:** ${discord.versions.kotlin}\n" +
-                            "**❯ DiscordKt:** ${discord.versions.library}"
+                            "**❯ DiscordKt:** ${discord.versions.library}" +
+                            "**❯ Kord:** ${discord.versions.kord}\n"
                 )
             }
         }
@@ -49,12 +50,11 @@ fun infoCommand() = commands("Info") {
     guildCommand("서버정보") {
         description = "서버정보를 보여줍니다."
         execute {
-            val iconUrl: String
-            val createTime = guild.id.timeStamp.atZone(ZoneId.systemDefault())
-            if (guild.getIconUrl(Image.Format.JPEG) !== null) {
-                iconUrl = guild.getIconUrl(Image.Format.JPEG).toString()
+            val createTime = guild.id.timeStamp.toLocalDateTime(TimeZone.currentSystemDefault())
+            val iconUrl = if (guild.getIconUrl(Image.Format.JPEG) !== null) {
+                guild.getIconUrl(Image.Format.JPEG).toString()
             } else {
-                iconUrl = ""
+                ""
             }
             respond {
                 description = "${guild.name}의 정보"
@@ -78,23 +78,22 @@ fun infoCommand() = commands("Info") {
     guildCommand("유저정보") {
         description = "유저정보를 보여줍니다."
         execute(UserArg.optionalNullable()) {
-            val target: User
             val game: String
             val status: String
-            if (args.first !== null) {
-                target = args.first!!
+            val target = if (args.first !== null) {
+                args.first!!
             } else {
-                target = author
+                author
             }
             val member = target.asMember(guild.id)
-            val joinTime = member.joinedAt.atZone(ZoneId.systemDefault())
-            val createTime = target.id.timeStamp.atZone(ZoneId.systemDefault())
+            val joinTime = member.joinedAt.toLocalDateTime(TimeZone.currentSystemDefault())
+            val createTime = target.id.timeStamp.toLocalDateTime(TimeZone.currentSystemDefault())
             val roles = member.roles.toList().map { it.mention }
             if (member.getPresenceOrNull() !== null) {
-                if (member.getPresence().activities.filter { it.type == ActivityType.Game }.isNotEmpty()) {
-                    game = member.getPresence().activities.filter { it.type == ActivityType.Game }[0].name
+                game = if (member.getPresence().activities.any { it.type == ActivityType.Game }) {
+                    member.getPresence().activities.filter { it.type == ActivityType.Game }[0].name
                 } else {
-                    game = "게임 중이지 않습니다."
+                    "게임 중이지 않습니다."
                 }
                 status = member.getPresence().status.value
             } else {

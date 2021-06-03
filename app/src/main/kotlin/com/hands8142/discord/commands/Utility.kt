@@ -76,26 +76,31 @@ fun utilityCommands() = commands("Utility") {
                 val first = args.first
                 val second = args.second
                 if (music.success) {
-                    if (first == null) {
-                        respond {
-                            title = "음악차트"
-                            color = discord.configuration.theme?.kColor
-                            for (i in 1..24) {
-                                addInlineField("${i}위", json.getString(i.toString()))
+                    when {
+                        first == null -> {
+                            respond {
+                                title = "음악차트"
+                                color = discord.configuration.theme?.kColor
+                                for (i in 1..24) {
+                                    addInlineField("${i}위", json.getString(i.toString()))
+                                }
                             }
                         }
-                    } else if (second == null) {
-                        respond(first.toString() + "위: " + json.getString(first.toString()))
-                    } else if (first < second) {
-                        respond {
-                            title = "${first}부터 ${second}까지 음악차트"
-                            color = discord.configuration.theme?.kColor
-                            for (i in first..second) {
-                                addInlineField("${i}위", json.getString(i.toString()))
+                        second == null -> {
+                            respond(first.toString() + "위: " + json.getString(first.toString()))
+                        }
+                        first < second -> {
+                            respond {
+                                title = "${first}부터 ${second}까지 음악차트"
+                                color = discord.configuration.theme?.kColor
+                                for (i in first..second) {
+                                    addInlineField("${i}위", json.getString(i.toString()))
+                                }
                             }
                         }
-                    } else {
-                        respond("범위를 다시 지정해 주세요.")
+                        else -> {
+                            respond("범위를 다시 지정해 주세요.")
+                        }
                     }
                 } else {
                     respond(music.message)

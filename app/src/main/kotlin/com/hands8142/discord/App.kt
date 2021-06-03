@@ -8,6 +8,7 @@ import me.jakejmattson.discordkt.api.dsl.bot
 import dev.kord.x.emoji.Emojis
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.flow.toList
+import me.jakejmattson.discordkt.api.dsl.Language
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import java.awt.Color
@@ -38,10 +39,13 @@ suspend fun main() {
             intents = Intents.all.values
         }
 
-        localization {
+        localeOf(Language.EN) {
             helpName = "도움말"
             helpDescription = "도움말 메뉴 표시"
             helpEmbedDescription = "자세한 내용은 `${prefix}${helpName} <command>`을 참조하십시오."
+            unknownCommand = "알 수 없는 명령어"
+            commandRecommendation = "추천 명령어: %s"
+            badArgs = "이 인수로 '%s'를 실행할 수 없습니다."
         }
 
         mentionEmbed {
