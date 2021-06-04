@@ -2,8 +2,11 @@ package com.hands8142.discord.commands
 
 import com.hands8142.discord.Util.timeFormat
 import dev.kord.common.entity.ActivityType
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.kColor
 import dev.kord.rest.Image
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -56,6 +59,11 @@ fun infoCommand() = commands("Info") {
             } else {
                 ""
             }
+            val roles = guild.roles.toList().map { it.mention }
+            val emoji = guild.emojis.toList()
+            val members = guild.members.toList()
+            val channels = guild.channels.toList()
+            val presence = members.mapNotNull { it.getPresenceOrNull() }
             respond {
                 description = "${guild.name}의 정보"
                 color = discord.configuration.theme?.kColor
@@ -69,8 +77,28 @@ fun infoCommand() = commands("Info") {
                             "**❯ 위치:** ${guild.getRegion().name}\n" +
                             "**❯ 부스트 티어:** ${guild.premiumTier.value}\n" +
                             "**❯ 보안 레벨:** ${guild.verificationLevel.value}\n" +
-                            "**❯ 생성일:** ${timeFormat(createTime)}"
+                            "**❯ 생성일:** ${timeFormat(createTime)}\n"
                 )
+                addField("통계",
+                    "**❯ 역할 수:** ${roles.size}\n" +
+                            "**❯ 이모티콘 수:** ${emoji.size}\n" +
+                            "**❯ 일반 이모티콘 수:** ${emoji.filter { !it.isAnimated }.size}\n" +
+                            "**❯ 애니메이션 이모티콘 수:** ${emoji.filter { it.isAnimated }.size}\n" +
+                            "**❯ 회원 수:** ${guild.memberCount}\n" +
+                            "**❯ 사람:** ${members.filter { !it.isBot }.size}\n" +
+                            "**❯ 봇:** ${members.filter { it.isBot }.size}\n" +
+                            "**❯ 채널 수:** ${channels.size}\n" +
+                            "**❯ 텍스트 채널:** ${channels.filter { it.type == ChannelType.GuildText }.size}\n" +
+                            "**❯ 음성 채널:** ${channels.filter { it.type == ChannelType.GuildVoice }.size}\n" +
+                            "**❯ 부스트 수:** ${guild.premiumSubscriptionCount}"
+                )
+                addField("존재",
+                    "**❯ 온라인:** ${presence.map { it.status.value }.filter { it == "online" }.size}\n" +
+                            "**❯ 자리 비움:** ${presence.map { it.status.value }.filter { it == "idle" }.size}\n" +
+                            "**❯ 다은 용무 중:** ${presence.map { it.status.value }.filter { it == "dnd" }.size}\n" +
+                            "**❯ 오프라인:** ${presence.map { it.status.value }.filter { it == "offline" }.size + members.map{ it.getPresenceOrNull() }.filter { it == null }.size}\n"
+                )
+                addField("역할[${roles.size}]", roles.joinToString(", "))
             }
         }
     }
