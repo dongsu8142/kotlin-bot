@@ -5,8 +5,6 @@ import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.kColor
 import dev.kord.rest.Image
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime

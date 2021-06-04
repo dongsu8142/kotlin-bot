@@ -2,15 +2,16 @@ package com.hands8142.discord
 
 import com.hands8142.discord.Util.Database
 import dev.kord.common.kColor
+import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
 import dev.kord.gateway.PrivilegedIntent
 import me.jakejmattson.discordkt.api.dsl.bot
 import dev.kord.x.emoji.Emojis
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.flow.toList
-import me.jakejmattson.discordkt.api.dsl.Language
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
+import me.jakejmattson.discordkt.api.locale.Language
 import java.awt.Color
 
 val dotenv = dotenv()
@@ -36,7 +37,7 @@ suspend fun main() {
             enableSearch = true
             commandReaction = Emojis.eyes
             theme = Color(0x00BFFF)
-            intents = Intents.all.values
+            intents = Intents(Intent.values).values
         }
 
         localeOf(Language.EN) {
@@ -44,8 +45,10 @@ suspend fun main() {
             helpDescription = "도움말 메뉴 표시"
             helpEmbedDescription = "자세한 내용은 `${prefix}${helpName} <command>`을 참조하십시오."
             unknownCommand = "알 수 없는 명령어"
-            commandRecommendation = "추천 명령어: %s"
-            badArgs = "이 인수로 '%s'를 실행할 수 없습니다."
+            notFound = "찾을 수 없음"
+            invalidFormat = "잘못된 형식"
+            commandRecommendation = "추천 명령어: {0}"
+            badArgs = "이 인수로 '{0}'를 실행할 수 없습니다."
         }
 
         mentionEmbed {
