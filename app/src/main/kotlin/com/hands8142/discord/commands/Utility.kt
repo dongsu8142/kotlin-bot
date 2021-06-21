@@ -14,7 +14,7 @@ import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-private val AccessKey = dotenv["ACCESS_KEY"]
+private val AccessKey = dotenv["UNSPLASH_ACCESS_KEY"]
 
 fun utilityCommands() = commands("Utility") {
     command("핑") {

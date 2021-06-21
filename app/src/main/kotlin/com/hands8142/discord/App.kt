@@ -20,7 +20,7 @@ val database = Database.createTable()
 private val token = dotenv["TOKEN"]
 private val prefix = dotenv["PREFIX"]
 
-@OptIn(PrivilegedIntent::class, dev.kord.common.annotation.KordPreview::class)
+@OptIn(dev.kord.common.annotation.KordPreview::class)
 suspend fun main() {
     require(token != null) { "Expected the bot token as a command line argument!" }
 
