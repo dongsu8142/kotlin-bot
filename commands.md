@@ -13,11 +13,11 @@
 | 유저정보     | [User]    | 유저정보를 보여줍니다.  |
 
 ## Moderation
-| Commands | Arguments | Description    |
-| -------- | --------- | -------------- |
-| 밴        | User, 사유  | 사용자를 밴합니다.     |
-| 언밴       | id        | 사용자의 밴을 풀어줍니다. |
-| 킥        | User, 사유  | 사용자를 추방합니다.    |
+| Commands | Arguments  | Description    |
+| -------- | ---------- | -------------- |
+| 밴        | User, [사유] | 사용자를 밴합니다.     |
+| 언밴       | id         | 사용자의 밴을 풀어줍니다. |
+| 킥        | User, [사유] | 사용자를 추방합니다.    |
 
 ## Utility
 | Commands               | Arguments                      | Description       |

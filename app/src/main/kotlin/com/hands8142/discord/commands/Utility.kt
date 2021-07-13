@@ -1,6 +1,7 @@
 package com.hands8142.discord.commands
 
 import com.google.gson.Gson
+import com.hands8142.discord.Util.request
 import com.hands8142.discord.dotenv
 import com.hands8142.discord.interfaces.API
 import dev.kord.common.kColor
@@ -27,12 +28,7 @@ fun utilityCommands() = commands("Utility") {
     command("코로나") {
         description = "현재 코로나 상황을 보여줍니다."
         execute {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://koreaapi.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val api = retrofit.create(API::class.java)
-            val response = api.getCorona().awaitResponse()
+            val response = request().getCorona().awaitResponse()
             if (response.isSuccessful) {
                 val corona = response.body()!!
                 if (corona.success) {
@@ -63,12 +59,7 @@ fun utilityCommands() = commands("Utility") {
     command("음악차트", "노래차트", "음악순위", "노래순위") {
         description = "멜론의 음악차트를 알려줍니다."
         execute(IntegerRangeArg(1, 100, "단일 또는 범위(1-100)").optionalNullable(), IntegerRangeArg(1, 100, "범위(1-100)").optionalNullable()) {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://koreaapi.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val api = retrofit.create(API::class.java)
-            val response = api.getMusic().awaitResponse()
+            val response = request().getMusic().awaitResponse()
             if (response.isSuccessful) {
                 val music = response.body()!!
                 val jsonString = Gson().toJson(music).trimIndent()
@@ -114,12 +105,7 @@ fun utilityCommands() = commands("Utility") {
     command("이미지", "사진"){
         description = "사진을 찾아줍니다."
         execute(EveryArg("사진 이름")) {
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.unsplash.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-            val api = retrofit.create(API::class.java)
-            val response = api.getUnsplash(AccessKey, args.first, 20).awaitResponse()
+            val response = request().getUnsplash(AccessKey, args.first, 20).awaitResponse()
             if (response.isSuccessful){
                 if (response.body()?.total != 0){
                     val random = Random().nextInt(response.body()?.results?.size!!)
