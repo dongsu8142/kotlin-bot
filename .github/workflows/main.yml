@@ -17,5 +17,6 @@ jobs:
           distribution: zulu
           java-version: 8
       - name: Build with Gradle
-      - run: chmod +x gradlew
-      - run: ./gradlew build
+        run: | 
+          chmod +x gradlew
+          ./gradlew build
