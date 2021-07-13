@@ -21,4 +21,5 @@ jobs:
       - name: Upload a jar
         uses: actions/upload-artifact@v2.2.4
         with:
+          name: jar
           path: app/build/libs/app.jar
