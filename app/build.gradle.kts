@@ -34,4 +34,5 @@ tasks.jar {
             "Main-Class" to application.mainClass
         ))
     }
+    archiveName = "bot.jar"
 }
