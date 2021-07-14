@@ -35,5 +35,4 @@ tasks.jar {
             "Main-Class" to application.mainClass
         ))
     }
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
