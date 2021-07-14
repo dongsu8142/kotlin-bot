@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.5.21"
+    id("com.github.johnrengelman.shadow") version "7.0.0"
     application
 }
 
@@ -29,11 +32,10 @@ tasks.compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.jar {
-    archiveFileName.set("bot.jar")
-    manifest {
-        attributes(mapOf(
-            "Main-Class" to application.mainClass
-        ))
+val shadowJar: ShadowJar by tasks
+shadowJar.apply {
+    manifest.attributes.apply {
+        put("Main-Class", application.mainClass)
     }
+    archiveFileName.set("bot.jar")
 }
