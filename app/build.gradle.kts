@@ -1,7 +1,9 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.5.20"
+    id("org.jetbrains.kotlin.jvm") version "1.5.21"
     application
 }
+
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -24,4 +26,12 @@ application {
 
 tasks.compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.jar {
+    manifest {
+        attributes(mapOf(
+            "Main-Class" to application.mainClass
+        ))
+    }
 }
