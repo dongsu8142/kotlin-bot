@@ -25,7 +25,7 @@ jobs:
           cp .env.example app/build/libs
           mv app/build/libs/.env.example app/build/libs/.env
       - name: Create start.bat
-        run: echo "java -jar bot.jar" > app/build/libs/start.bat
+        run: echo -e "@echo off\njava -jar bot.jar\nPAUSE" > app/build/libs/start.bat
       - name: Upload a release
         uses: actions/upload-artifact@v2.2.4
         with:
