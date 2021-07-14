@@ -8,6 +8,7 @@ import java.sql.SQLException
 private val databaseUrl = dotenv["DATABASE_URL"]
 private val databaseUser = dotenv["DATABASE_USER"]
 private val databasePassword = dotenv["DATABASE_PASSWORD"]
+private val ddlAuto = dotenv["DDL-AUTO"]
 
 object Database {
     fun connection(): Connection? {
@@ -15,6 +16,9 @@ object Database {
             Class.forName("com.mysql.cj.jdbc.Driver")
             val connect = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword)
             println("Database Connection Completed")
+            if (ddlAuto == "create") {
+                createTable(connect)
+            }
             return connect
         } catch (e: SQLException) {
             e.printStackTrace()
@@ -22,8 +26,7 @@ object Database {
         return null
     }
 
-    fun createTable(): Connection? {
-        val database = connection()
+    private fun createTable(database: Connection?) {
         if (database !== null) {
             try {
                 val sql =
@@ -37,11 +40,9 @@ object Database {
                     database.prepareStatement(sql).executeUpdate()
                     println("Create Table Completed")
                 }
-                return database
             } catch (e: SQLException) {
                 e.printStackTrace()
             }
         }
-        return null
     }
 }

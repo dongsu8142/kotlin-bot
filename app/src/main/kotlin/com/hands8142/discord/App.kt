@@ -1,6 +1,5 @@
 package com.hands8142.discord
 
-import com.hands8142.discord.Util.Database
 import dev.kord.common.kColor
 import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
@@ -8,15 +7,12 @@ import me.jakejmattson.discordkt.api.dsl.bot
 import dev.kord.x.emoji.Emojis
 import io.github.cdimascio.dotenv.dotenv
 import kotlinx.coroutines.flow.toList
-import me.jakejmattson.discordkt.api.dsl.PermissionContext
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import me.jakejmattson.discordkt.api.locale.Language
 import java.awt.Color
 
 val dotenv = dotenv()
-// val database = Database.connection()
-val database = Database.createTable()
 private val token = dotenv["TOKEN"]
 private val prefix = dotenv["PREFIX"]
 

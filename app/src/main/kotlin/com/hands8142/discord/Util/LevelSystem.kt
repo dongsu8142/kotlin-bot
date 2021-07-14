@@ -1,6 +1,5 @@
 package com.hands8142.discord.Util
 
-import com.hands8142.discord.database
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import java.sql.ResultSet
@@ -8,6 +7,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.floor
 import kotlin.math.sqrt
+
+private val database = Database.connection()
 
 fun appendXp(userId: Long, guildId: Long, xp: Int): Boolean {
     if (database !== null) {
