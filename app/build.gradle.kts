@@ -29,10 +29,11 @@ tasks.compileKotlin {
 }
 
 tasks.jar {
+    archiveFileName.set("bot.jar")
     manifest {
         attributes(mapOf(
             "Main-Class" to application.mainClass
         ))
     }
-    archiveName = "bot.jar"
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
