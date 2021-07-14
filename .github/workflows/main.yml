@@ -20,8 +20,12 @@ jobs:
         run: ./gradlew build
       - name: Remove app.jar
         run: rm app/build/libs/app.jar
-      - name: Copy .env.example
-        run: cp .env.example app/build/libs
+      - name: Create .env
+        run: |
+          cp .env.example app/build/libs
+          mv app/build/libs/.env.example app/build/libs/.env
+      - name: Create start.bat
+        run: echo "java -jar bot.jar" > app/build/libs/start.bat
       - name: Upload a release
         uses: actions/upload-artifact@v2.2.4
         with:
