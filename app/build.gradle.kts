@@ -6,8 +6,6 @@ plugins {
     application
 }
 
-version = "1.0"
-
 repositories {
     mavenCentral()
     maven("https://oss.sonatype.org/content/repositories/snapshots/")

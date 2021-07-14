@@ -18,8 +18,12 @@ jobs:
           java-version: 8
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Remove app.jar
+        run: rm app/build/libs/app.jar
+      - name: Copy .env.example
+        run: cp .env.example app/build/libs
       - name: Upload a jar
         uses: actions/upload-artifact@v2.2.4
         with:
-          name: jar
+          name: release
           path: app/build/libs
