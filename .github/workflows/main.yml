@@ -22,7 +22,7 @@ jobs:
         run: rm app/build/libs/app.jar
       - name: Copy .env.example
         run: cp .env.example app/build/libs
-      - name: Upload a jar
+      - name: Upload a release
         uses: actions/upload-artifact@v2.2.4
         with:
           name: release
