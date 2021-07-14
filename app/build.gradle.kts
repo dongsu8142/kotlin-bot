@@ -11,6 +11,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("me.jakejmattson:DiscordKt:0.22.0-SNAPSHOT")
     implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
