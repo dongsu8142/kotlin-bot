@@ -1,20 +1,22 @@
 package com.hands8142.discord.Util
 
-import com.hands8142.discord.dotenv
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
 
-private val databaseUrl = dotenv["DATABASE_URL"]
-private val databaseUser = dotenv["DATABASE_USER"]
-private val databasePassword = dotenv["DATABASE_PASSWORD"]
-private val ddlAuto = dotenv["DDL-AUTO"]
+private val databaseConfig = Config.getConfig().database
+private val databaseHost = databaseConfig.host
+private val databasePort = databaseConfig.port
+private val databaseDatabase = databaseConfig.database
+private val databaseUsername = databaseConfig.username
+private val databasePassword = databaseConfig.password
+private val ddlAuto = databaseConfig.ddl_auto
 
 object Database {
     fun connection(): Connection? {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver")
-            val connect = DriverManager.getConnection(databaseUrl, databaseUser, databasePassword)
+            val connect = DriverManager.getConnection("jdbc:mysql://$databaseHost:$databasePort/$databaseDatabase", databaseUsername, databasePassword)
             println("Database Connection Completed")
             if (ddlAuto == "create") {
                 createTable(connect)

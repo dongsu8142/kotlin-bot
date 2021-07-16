@@ -1,0 +1,14 @@
+bot:
+  token:
+  prefix:
+
+api:
+  unsplash:
+
+database:
+  host: localhost
+  port: 3306
+  database: test
+  username: root
+  password:
+  ddl_auto: create

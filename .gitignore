@@ -4,6 +4,6 @@
 # Ignore Gradle build output directory
 build
 
-.env
+config.yml
 
 .idea

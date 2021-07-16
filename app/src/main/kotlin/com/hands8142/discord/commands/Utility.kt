@@ -1,9 +1,8 @@
 package com.hands8142.discord.commands
 
 import com.google.gson.Gson
+import com.hands8142.discord.Util.Config
 import com.hands8142.discord.Util.request
-import com.hands8142.discord.dotenv
-import com.hands8142.discord.interfaces.API
 import dev.kord.common.kColor
 import me.jakejmattson.discordkt.api.arguments.EveryArg
 import me.jakejmattson.discordkt.api.arguments.IntegerRangeArg
@@ -15,7 +14,8 @@ import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-private val AccessKey = dotenv["UNSPLASH_ACCESS_KEY"]
+private val apiConfig = Config.getConfig().api
+private val AccessKey = apiConfig.unsplash
 
 fun utilityCommands() = commands("Utility") {
     command("핑") {
