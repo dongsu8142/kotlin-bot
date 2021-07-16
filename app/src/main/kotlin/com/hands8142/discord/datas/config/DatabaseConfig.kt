@@ -1,6 +1,6 @@
 package com.hands8142.discord.datas.config
 
-open class DatabaseConfig{
+open class DatabaseConfig {
     lateinit var host: String
     lateinit var port: String
     lateinit var database: String
