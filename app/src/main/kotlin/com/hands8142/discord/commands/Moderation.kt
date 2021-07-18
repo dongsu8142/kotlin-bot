@@ -12,8 +12,8 @@ fun moderationCommands() = commands("Moderation") {
     guildCommand("킥") {
         description = "사용자를 추방합니다."
         execute(UserArg, EveryArg("사유").optionalNullable()) {
-            val permission = checkPermission(author, discord, guild, Permission.KickMembers)
-            if(permission) {
+            val permission = checkPermission(author, discord, guild, Permission.KickMembers, user = true, bot = true)
+            if(!permission) {
                 respond("권한이 없습니다.")
                 return@execute
             }
@@ -25,8 +25,8 @@ fun moderationCommands() = commands("Moderation") {
     guildCommand("밴") {
         description = "사용자를 밴합니다."
         execute(UserArg, EveryArg("사유").optionalNullable()) {
-            val permission = checkPermission(author, discord, guild, Permission.KickMembers)
-            if(permission) {
+            val permission = checkPermission(author, discord, guild, Permission.KickMembers, user = true, bot = true)
+            if(!permission) {
                 respond("권한이 없습니다.")
                 return@execute
             }
@@ -40,8 +40,8 @@ fun moderationCommands() = commands("Moderation") {
     guildCommand("언밴") {
         description = "사용자의 밴을 풀어줍니다."
         execute(EveryArg("id")) {
-            val permission = checkPermission(author, discord, guild, Permission.KickMembers)
-            if(permission) {
+            val permission = checkPermission(author, discord, guild, Permission.KickMembers, user = true, bot = true)
+            if(!permission) {
                 respond("권한이 없습니다.")
                 return@execute
             }

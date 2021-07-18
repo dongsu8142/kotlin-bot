@@ -1,6 +1,7 @@
 package com.hands8142.discord
 
 import com.hands8142.discord.Util.Config
+import com.hands8142.discord.services.Permissions
 import dev.kord.common.kColor
 import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
@@ -34,6 +35,7 @@ suspend fun main() {
             commandReaction = Emojis.eyes
             theme = Color(0x00BFFF)
             intents = Intents(Intent.values).values
+            permissions(commandDefault = Permissions.EVERYONE)
         }
 
         localeOf(Language.EN) {
