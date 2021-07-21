@@ -30,9 +30,9 @@ object LevelSystem {
             } else {
                 val insertSql =
                     "INSERT INTO level(userId, guildId, xp, level) VALUES ($userId, $guildId, $xp, ${
-                        floor(
-                            0.1 * sqrt(xp.toDouble())
-                        ).toLong()
+                    floor(
+                        0.1 * sqrt(xp.toDouble())
+                    ).toLong()
                     })"
                 database.prepareStatement(insertSql).executeUpdate()
                 return floor(0.1 * sqrt(xp.toDouble())) > 0

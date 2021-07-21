@@ -5,9 +5,9 @@ import com.hands8142.discord.services.Permissions
 import dev.kord.common.kColor
 import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
-import me.jakejmattson.discordkt.api.dsl.bot
 import dev.kord.x.emoji.Emojis
 import kotlinx.coroutines.flow.toList
+import me.jakejmattson.discordkt.api.dsl.bot
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.profileLink
 import me.jakejmattson.discordkt.api.locale.Language
@@ -41,7 +41,7 @@ suspend fun main() {
         localeOf(Language.EN) {
             helpName = "도움말"
             helpDescription = "도움말 메뉴 표시"
-            helpEmbedDescription = "자세한 내용은 `${prefix}${helpName} <command>`을 참조하십시오."
+            helpEmbedDescription = "자세한 내용은 `${prefix}$helpName <command>`을 참조하십시오."
             unknownCommand = "알 수 없는 명령어"
             notFound = "찾을 수 없음"
             invalidFormat = "잘못된 형식"

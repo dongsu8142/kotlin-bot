@@ -1,6 +1,6 @@
 package com.hands8142.discord.datas
 
-data class ResultGetCorona (
+data class ResultGetCorona(
     val success: Boolean,
     val message: String,
     val time: String,

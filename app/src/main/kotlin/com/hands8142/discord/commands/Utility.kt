@@ -10,9 +10,8 @@ import me.jakejmattson.discordkt.api.dsl.commands
 import me.jakejmattson.discordkt.api.extensions.addField
 import me.jakejmattson.discordkt.api.extensions.addInlineField
 import org.json.JSONObject
-import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import retrofit2.awaitResponse
+import java.util.Random
 
 private val apiConfig = Config.getConfig().api
 private val AccessKey = apiConfig.unsplash
@@ -102,12 +101,12 @@ fun utilityCommands() = commands("Utility") {
         }
     }
 
-    command("이미지", "사진"){
+    command("이미지", "사진") {
         description = "사진을 찾아줍니다."
         execute(EveryArg("사진 이름")) {
             val response = request().getUnsplash(AccessKey, args.first, 20).awaitResponse()
-            if (response.isSuccessful){
-                if (response.body()?.total != 0){
+            if (response.isSuccessful) {
+                if (response.body()?.total != 0) {
                     val random = Random().nextInt(response.body()?.results?.size!!)
                     respond(response.body()!!.results[random].urls.raw)
                 } else {

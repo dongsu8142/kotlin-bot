@@ -1,6 +1,7 @@
 package com.hands8142.discord.interfaces
 
-import com.hands8142.discord.datas.*
+import com.hands8142.discord.datas.ResultGetCorona
+import com.hands8142.discord.datas.ResultGetMusic
 import com.hands8142.discord.datas.unsplash.ResultGetUnsplash
 import retrofit2.Call
 import retrofit2.http.GET

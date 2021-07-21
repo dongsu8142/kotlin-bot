@@ -19,7 +19,7 @@ fun levelCommand() = commands("level") {
                     val leaderboard = LevelSystem.computeLeaderboard(discord.kord, rawLeaderboard)
                     val lb = leaderboard.map {
                         "${it["position"]}. ${it["username"]}#${it["discriminator"]}\nLevel: ${
-                            it["level"]
+                        it["level"]
                         }\nXP: ${it["xp"]}"
                     }
                     respond(lb.joinToString("\n"))
@@ -95,7 +95,7 @@ fun levelCommand() = commands("level") {
                     val user = LevelSystem.fetch(args.first.id.value, guild.id.value)!!
                     if (user.next()) {
                         val level = user.getLong("level")
-                        message.channel.createMessage("축하합니다 ${args.first.mention}님, 레벨이 상승하였습니다 ${level}!!")
+                        message.channel.createMessage("축하합니다 ${args.first.mention}님, 레벨이 상승하였습니다 $level!!")
                     }
                 }
             } else {
