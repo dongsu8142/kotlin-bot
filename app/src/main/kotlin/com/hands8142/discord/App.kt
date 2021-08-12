@@ -34,7 +34,7 @@ suspend fun main() {
             enableSearch = true
             commandReaction = Emojis.eyes
             theme = Color(0x00BFFF)
-            intents = Intents(Intent.values).values
+            intents = Intents(Intent.values)
             permissions(commandDefault = Permissions.EVERYONE)
         }
 
