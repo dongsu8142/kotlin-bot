@@ -6,7 +6,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.ban
 import me.jakejmattson.discordkt.api.arguments.EveryArg
 import me.jakejmattson.discordkt.api.arguments.UserArg
-import me.jakejmattson.discordkt.api.dsl.commands
+import me.jakejmattson.discordkt.api.commands.commands
 
 fun moderationCommands() = commands("Moderation") {
     guildCommand("킥") {

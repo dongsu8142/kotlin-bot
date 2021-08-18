@@ -6,7 +6,7 @@ import dev.kord.common.entity.Permission
 import dev.kord.common.kColor
 import me.jakejmattson.discordkt.api.arguments.LongArg
 import me.jakejmattson.discordkt.api.arguments.UserArg
-import me.jakejmattson.discordkt.api.dsl.commands
+import me.jakejmattson.discordkt.api.commands.commands
 import me.jakejmattson.discordkt.api.extensions.addInlineField
 
 fun levelCommand() = commands("level") {
