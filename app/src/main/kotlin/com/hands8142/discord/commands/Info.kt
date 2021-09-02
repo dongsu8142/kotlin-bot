@@ -18,9 +18,6 @@ import java.util.Date
 private val startTime = Date()
 
 fun infoCommand() = commands("Info") {
-    slash(""){
-        
-    }
     command("봇정보") {
         description = "봇의 정보를 보여줍니다."
         execute {
