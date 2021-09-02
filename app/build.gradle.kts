@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.5.21"
+    id("org.jetbrains.kotlin.jvm") version "1.5.30"
     id("com.github.johnrengelman.shadow") version "7.0.0"
     application
 }
@@ -17,9 +17,9 @@ dependencies {
     implementation("org.yaml:snakeyaml:1.29")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("com.google.code.gson:gson:2.8.8")
     implementation("org.json:json:20210307")
-    implementation("mysql:mysql-connector-java:8.0.25")
+    implementation("mysql:mysql-connector-java:8.0.26")
 }
 
 application {
